@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Ian Riel · Tech Portfolio</title>
+  <!-- Google Fonts: modern sans + casual touch -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'DM Sans', sans-serif;
+      background-color: #f4f6fa;
+      transition: background-color 0.3s ease, color 0.2s ease;
+      scroll-behavior: smooth;
+    }
+
+    /* ===== DARK THEME (primary gray blend) ===== */
+    body.dark {
+      background-color: #0e1217;
+      color: #eef2f5;
+    }
+
+    /* global containers & cards */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* glassmorphism / modern card style */
+    .card-modern {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.02);
+      transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.2s;
+    }
+
+    body.dark .card-modern {
+      background: rgba(25, 30, 36, 0.85);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    /* navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #3a3f47, #6c757d);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    body.dark .logo {
+      background: linear-gradient(135deg, #cbd5e1, #a0aab5);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #2c3e44;
+      transition: 0.2s;
+    }
+
+    body.dark .nav-links a {
+      color: #cfdfed;
+    }
+
+    .nav-links a:hover {
+      color: #1f6392;
+    }
+
+    /* theme toggle button */
+    .theme-toggle {
+      background: rgba(128, 128, 128, 0.15);
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      padding: 0.55rem 0.9rem;
+      border-radius: 3rem;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+      color: #2c3e44;
+    }
+
+    body.dark .theme-toggle {
+      background: rgba(200, 200, 210, 0.12);
+      color: #eef2f5;
+    }
+
+    /* Hero section with animation */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2.5rem;
+      margin: 2.5rem 0 4rem 0;
+    }
+
+    .hero-content {
+      flex: 1.2;
+      animation: fadeSlideUp 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .hero-badge {
+      background: #e9ecef;
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #3a5468;
+      margin-bottom: 1.2rem;
+    }
+
+    body.dark .hero-badge {
+      background: #23272e;
+      color: #b9cadb;
+    }
+
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-highlight {
+      color: #5b6e8c;
+      border-bottom: 3px solid #8d99ae;
+    }
+
+    body.dark .hero-highlight {
+      color: #b9cbff;
+      border-bottom-color: #6c7a91;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #3a4b5a;
+      margin-bottom: 1.8rem;
+      max-width: 90%;
+    }
+
+    body.dark .hero-desc {
+      color: #cbdbe2;
+    }
+
+    .hero-image {
+      flex: 0.8;
+      display: flex;
+      justify-content: center;
+      animation: floatGlow 2.5s infinite ease-in-out;
+    }
+
+    .image-frame {
+      width: 260px;
+      height: 260px;
+      background: linear-gradient(145deg, #d4dce4, #bdc3ce);
+      border-radius: 38% 62% 70% 30% / 40% 45% 55% 60%;
+      overflow: hidden;
+      box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s;
+      border: 3px solid rgba(255, 255, 255, 0.5);
+    }
+
+    body.dark .image-frame {
+      background: linear-gradient(145deg, #2f363f, #1e242b);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+
+    .image-frame:hover img {
+      transform: scale(1.03);
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: #2c3e50;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    body.dark .btn-primary {
+      background: #3a4e6b;
+      color: #f0f3f8;
+    }
+
+    .btn-primary:hover {
+      background: #1f4e6e;
+      transform: translateY(-3px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #5f7f9e;
+      padding: 0.8rem 1.8rem;
+      border-radius: 3rem;
+      font-weight: 500;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    body.dark .btn-outline {
+      border-color: #8fa0b5;
+      color: #eef2f5;
+    }
+
+    .btn-outline:hover {
+      background: rgba(100, 108, 118, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* section style */
+    .section {
+      margin: 5rem 0;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 650;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60%;
+      height: 3px;
+      background: #8d99ae;
+      border-radius: 4px;
+    }
+
+    /* about grid + text */
+    .about-grid {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .about-text {
+      flex: 2;
+    }
+
+    .about-text p {
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+      font-size: 1.05rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.8rem 0 0;
+    }
+
+    .skill-tag {
+      background: #e2e8f0;
+      padding: 0.4rem 1.1rem;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #2c3e50;
+      transition: all 0.2s;
+    }
+
+    body.dark .skill-tag {
+      background: #252e38;
+      color: #dce5ef;
+    }
+
+    /* cards for trainee & experience */
+    .exp-card {
+      background: #f8fafc;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      transition: all 0.2s;
+      border-left: 5px solid #7f8c8d;
+    }
+
+    body.dark .exp-card {
+      background: #1a2027;
+      border-left-color: #5f7f9e;
+    }
+
+    .exp-card h3 {
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    /* tools & software list */
+    .tools-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .tool-item {
+      background: rgba(0,0,0,0.04);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    body.dark .tool-item {
+      background: rgba(255,255,255,0.07);
+    }
+
+    /* animation keyframes */
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatGlow {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    /* simple responsive */
+    @media (max-width: 780px) {
+      .container {
+        padding: 0 1.2rem;
+      }
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      .hero-desc {
+        max-width: 100%;
+      }
+      .image-frame {
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(128, 128, 128, 0.2);
+      margin-top: 3rem;
+      font-size: 0.85rem;
+    }
+
+    /* cool scroll effect */
+    ::selection {
+      background: #9aaebf;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Navigation + dark mode toggle -->
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-laptop-code" style="margin-right: 6px;"></i> IanDev
+    </div>
+    <div class="nav-links">
+      
+      <button id="darkModeToggle" class="theme-toggle" aria-label="Dark mode">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero section with animation and image placeholder -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-terminal"></i> BSIT-3 · CSO Committee
+      </div>
+      <h1>
+        Hi, I'm <span class="hero-highlight">Ian Riel</span><br>
+        Tech Enthusiast & Problem Solver
+      </h1>
+      <p class="hero-desc">
+        Dedicated BSIT student, hardware repair specialist, and creative troubleshooter. 
+        I blend academic excellence with real-world system diagnostics.
+      </p>
+      <div class="btn-group">
+        <button class="btn-primary" onclick="scrollToContact()"><i class="fas fa-paper-plane"></i> Connect with me</button>
+        <button class="btn-outline" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})"><i class="fas fa-user-astronaut"></i> More about me</button>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="image-frame">
+        <!-- =========  PUT YOUR IMAGE HERE ========= -->
+        <!-- Replace 'your-image.jpg' with your actual image file name or URL -->
+        <img id="profileImage" src="Wolf eye (1).png" alt="Your profile photo">
+        <!-- ======================================= -->
+      </div>
+    </div>
+  </div>
+
+  <!-- About section (myself) -->
+  <div id="about" class="section">
+    <h2 class="section-title">About myself</h2>
+    <div class="about-grid">
+      <div class="about-text card-modern" style="padding: 2rem;">
+        <p>🚀 As a dedicated <strong>BSIT-3 student at Lyceum of Aparri</strong> and active <strong>CSO committee member</strong>, I combine academic excellence with practical technical skills. My methodical approach to technical challenges ensures every system I work on achieves peak performance.</p>
+        <p>💻 With expertise in <strong>computer troubleshooting, hardware repair, and system diagnostics</strong>, I deliver effective solutions that clients trust. I believe in clean workflows and continuous improvement.</p>
+        <p>🎓 I was a trainee at Lyceum of Aparri as an <strong>Auxiliary Technology Program Trainee</strong>, where I deepened my knowledge about computer internals, maintenance, and user support.</p>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class="fas fa-microchip"></i> Hardware repair</span>
+          <span class="skill-tag"><i class="fas fa-tachometer-alt"></i> System diagnostics</span>
+          <span class="skill-tag"><i class="fas fa-network-wired"></i> Troubleshooting</span>
+          <span class="skill-tag"><i class="fas fa-code"></i> HTML/CSS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience & trainee + software tools -->
+  <div id="experience" class="section">
+    <h2 class="section-title">Professional journey</h2>
+    <div class="exp-card card-modern" style="padding: 1.6rem;">
+      <h3><i class="fas fa-graduation-cap"></i> Auxiliary Technology Program Trainee</h3>
+      <p style="margin: 0.5rem 0 0.2rem; font-weight: 500;">Lyceum of Aparri · 2023 – 2024</p>
+      <p>Hands-on training in computer assembly, preventive maintenance, and software deployment. Assisted in maintaining lab equipment and resolving hardware/software issues for students and faculty.</p>
+    </div>
+
+    <div class="exp-card card-modern" style="margin-top: 1.5rem; padding: 1.6rem;">
+      <h3><i class="fas fa-users"></i> CSO Committee Member (Active)</h3>
+      <p>Organizing student events, collaborating with tech-driven initiatives, and representing the IT department. Strengthening leadership and communication skills.</p>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <h3 style="font-weight: 600; margin-bottom: 1rem;"><i class="fas fa-tools"></i> Core Tools & Software</h3>
+      <div class="tools-list">
+        <div class="tool-item"><i class="fab fa-microsoft"></i> Microsoft Word</div>
+        <div class="tool-item"><i class="fab fa-microsoft"></i> PowerPoint</div>
+        <div class="tool-item"><i class="fas fa-table"></i> Excel</div>
+        <div class="tool-item"><i class="fab fa-html5"></i> HTML5 & CSS3</div>
+        <div class="tool-item"><i class="fas fa-desktop"></i> Hardware Toolkit</div>
+        <div class="tool-item"><i class="fas fa-chalkboard-teacher"></i> System Diagnostics</div>
+      </div>
+      <p style="margin-top: 1.2rem; font-style: italic; opacity: 0.8;">“Making technology work better, one system at a time.”</p>
+    </div>
+  </div>
+
+  <!-- Portfolio / design section: previous portfolio + new better design -->
+  <div class="section">
+    <h2 class="section-title">Portfolio evolution</h2>
+    <div class="card-modern" style="padding: 1.8rem; display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; align-items: center;">
+      <div style="flex:1">
+        <i class="fas fa-layer-group" style="font-size: 2rem; color: #6c7a89;"></i>
+        <h3 style="margin: 0.6rem 0 0.5rem;">Modern & Casual Refresh</h3>
+        <p>My previous portfolio showcased core skills — but this new version blends fluid animations, dark/light harmony, and a sophisticated gray palette. Designed to reflect my evolving technical eye and passion for aesthetics.</p>
+        <div class="skill-tags" style="margin-top: 1rem;">
+          <span class="skill-tag">✨ smooth animations</span>
+          <span class="skill-tag">🎨 gray blend</span>
+          <span class="skill-tag">🌙 dark theme</span>
+        </div>
+      </div>
+      <div style="background: #eef2f9; border-radius: 1.5rem; padding: 1rem 1.8rem; text-align: center; min-width: 130px;">
+        <i class="fas fa-code-branch" style="font-size: 2rem;"></i>
+        <p style="font-weight: 500;">v2.0<br>improved UI</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- contact / connect section -->
+  <div id="contact" class="section">
+    <h2 class="section-title">Let's Connect</h2>
+    <div class="card-modern" style="padding: 2rem; text-align: center;">
+      <p style="margin-bottom: 1rem;">📧 <strong>ian.riel@lyceum.edu.ph</strong>  |  📞 +63 912 345 6789</p>
+      <p style="margin-bottom: 1.5rem;">Available for collaborations, hardware consultations, or just a tech chat!</p>
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <button class="btn-primary" onclick="alert('📧 ian.riel@lyceum.edu.ph \nThanks for reaching out!')"><i class="fas fa-envelope"></i> Copy email</button>
+        <button class="btn-outline" onclick="alert('Let’s connect! Follow my tech journey.')"><i class="fab fa-linkedin"></i> LinkedIn</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Ian Riel — BSIT Student, Hardware Enthusiast | Designed with <i class="fas fa-heart" style="color: #b0b8c5;"></i> & modern gray vibes</p>
+  </footer>
+</div>
+
+<script>
+  // Dark mode toggle with gray blending and local storage
+  const toggleBtn = document.getElementById('darkModeToggle');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let currentTheme = localStorage.getItem('theme');
+
+  function setTheme(theme) {
+    if (theme === 'dark') {
+      document.body.classList.add('dark');
+      toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+      document.body.classList.remove('dark');
+      toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+    localStorage.setItem('theme', theme);
+  }
+
+  if (currentTheme) {
+    setTheme(currentTheme);
+  } else {
+    if (prefersDark) setTheme('dark');
+    else setTheme('light');
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    if (document.body.classList.contains('dark')) {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
+  });
+
+  function scrollToContact() {
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // add a tiny interactive effect to image upload? but we allow manual image replacement
+  // Provide a smart way: allow user to click on image frame to upload their own photo (better UX)
+  const imageFrameDiv = document.querySelector('.image-frame');
+  const profileImg = document.getElementById('profileImage');
+  
+  // optional: click to upload your own image - convenience feature
+  imageFrameDiv.style.cursor = 'pointer';
+  imageFrameDiv.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          profileImg.src = e.target.result;
+          // store in localStorage to persist theme? not necessary but nice
+          localStorage.setItem('userPortfolioImage', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    input.click();
+  });
+
+  // retrieve previously uploaded image if any
+  const savedImage = localStorage.getItem('userPortfolioImage');
+  if (savedImage && savedImage.startsWith('data:image')) {
+    profileImg.src = savedImage;
+  }
+
+  // small console note
+  console.log('💻 Modern portfolio ready — add your own photo by clicking the profile frame!');
+</script>
+
+<!-- Notes: 
+  - Replace the placeholder image by clicking on the circular frame.
+  - For permanent image, edit the <img id="profileImage"> src attribute.
+  - Color scheme: gray tones (#eef2f9, #2c3e50, #5f6c7a) harmonized with dark theme.
+  - Animations: hero fade+slide, floating image, button hover effects.
+-->
+</body>
+</html>
